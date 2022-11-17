@@ -1,72 +1,67 @@
 import React from 'react';
-import * as ReactDOM from 'react-dom/client';
+import * as ReactDOM from 'react-dom';
 import {useEffect} from 'react';
 import {useState } from 'react';
-import ArtGenGrab from './ArtGenGrab';
+import ArtGenGrab from './pages/ArtGenGrab';
+import CustomPromptPage from './pages/CustomPromptPage';
+import Layout from './pages/Layout';
+import Homepage from './pages/Homepage';
+import './stylesheet.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
-const root = ReactDOM.createRoot(
-    document.getElementById('root')
-);
+// const root = ReactDOM.createRoot(
+//     document.getElementById('root')
+// );
 
-root.render(
-    <React.StrictMode>
-        {/* <Body/>
-        <SakilaAPI/>
-        <GetImage/> */}
-        <ArtGenGrab/>
-    </React.StrictMode>
-)
-
-function Body(){
+export default function App(){
     return(
         <div>
-            Hello
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout/>}>
+                    <Route index element={<Homepage/>}/>
+                    <Route path="sakila" element={<ArtGenGrab />}/>
+                    <Route path="custom" element={<CustomPromptPage/>}/>
+                    <Route path="*" element={<NoPage />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+        </div>
+    );
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
+
+function NoPage(){
+    return(
+        <div id="err">
+            404
         </div>
     )
 }
 
+// root.render(
+//     <div>
+//         <Navbar/>
+//         <Header/>
+//         <Body/>
+//     </div>
+// )
 
-function SakilaAPI(){
-    const [error, setError] = useState(null);
-    const [desc, setDesc] = useState("")
+// function Body(){
+//     return(
+//         <div id="main">
+//             <ArtGenGrab/>
+//             <CustomPromptPage/>
+//         </div>
+//     )
+// }
 
-    useEffect(() => {
-        fetch("http://localhost:8080/home/allFilms/single/4")
-        .then(res => res.json())
-        .then(desc => {
-            setDesc(desc.filmDesc);
-        },
-        error => {
-            setError(error);
-        }
-        )
-    },[])
-    if(error){
-        return <div>Error loading</div>
-    } else{
-        return(
-        <div id = "activity"> {desc} </div>
-        )
-    }
-}
-
-
-// function GetImage(){
-//     const[url, seturl] = useState(0)
-    
-//     useEffect(() => {
-//         fetch('http://localhost:8080/home/films/4')
-//         .then(res => res.json())
-//         .then(cats => {
-//             cats.forEach(cat =>{
-//                 seturl(cat.url)
-//             })
-//         })
-//     },[])
+// function Header(){
 //     return(
 //         <div>
-//             <img th:src="'data:image/png;base64,' + ${image}"/>
+//             <h1 id ="topHeader">Art Generate</h1>
 //         </div>
 //     )
 // }
