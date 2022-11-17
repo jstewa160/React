@@ -1,5 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import '../stylesheet.css';
+import gif from '../skate.gif';
 
 
 export default function ArtGenGrab(){
@@ -124,7 +125,7 @@ export default function ArtGenGrab(){
         return(
             <div id='main'>
                 <FilmTitle/>
-                <img alt="loading..." src={'data:image/png;base64,' + ai} />
+                <img alt={gif} src={'data:image/png;base64,' + ai} />
                 <br></br>
                 <button id='navbtn'onSubmit={handleSubmit}>
                 New Image!

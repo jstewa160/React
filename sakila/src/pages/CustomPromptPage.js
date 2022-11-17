@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import gif from "../skate.gif"
 
 export default function SakilaPage(){
     
@@ -104,7 +105,7 @@ export default function SakilaPage(){
     return(
         <div id='main'>
             <FilmTitle/>
-            <img alt="loading..." src={'data:image/png;base64,' + ai} />
+            <img alt={gif} src={'data:image/png;base64,' + ai} />
             <form onSubmit={handleSubmit}>
             <label>
               Give a Prompt:
@@ -118,3 +119,4 @@ export default function SakilaPage(){
         </div>
     );
 }
+

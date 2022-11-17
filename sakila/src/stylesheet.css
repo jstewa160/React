@@ -17,6 +17,15 @@
     width: 100%;
 }
 
+html{
+    background-color: rgb(249, 246, 238)
+}
+
+#waila{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+}
+
 
 #err{
     align-items: center;
