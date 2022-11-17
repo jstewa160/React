@@ -95,7 +95,7 @@ export default function SakilaPage(){
                 console.log(ai.generations[0].img)
                 if(ai.generations[0]){
                     setai(ai.generations[0].img);
-                    console.log("im here at getImage now");
+                    console.log("image got!");
                     setInput("");
                 }
         });
@@ -110,7 +110,7 @@ export default function SakilaPage(){
             </div>
             );
         }
-        else {
+        else if(image == input){
             return(
             <div>
                 <img alt="loading..." src={gif}/>
@@ -134,7 +134,7 @@ export default function SakilaPage(){
               Give a Prompt:
               <input
                 type="text"
-                onChange={e => {setImage(e.target.value); setInput(e.target.value)}}
+                onChange={e => {setImage(e.target.value)}} //; setInput(e.target.value)
               />
             </label>
             <input type="submit" value="Submit" />

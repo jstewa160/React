@@ -116,7 +116,7 @@ export default function ArtGenGrab(){
                 console.log(ai.generations[0].img)
                 if(ai.generations[0]){
                     setai(ai.generations[0].img);
-                    console.log("im here at getImage now");
+                    console.log("image got!");
                 }
         });
     }
