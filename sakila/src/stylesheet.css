@@ -17,6 +17,10 @@
     width: 100%;
 }
 
+#prompt{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 html{
     background-color: rgb(249, 246, 238)
 }

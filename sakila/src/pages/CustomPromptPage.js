@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import gif from "../skate.gif"
+import gif from "../skate2.gif"
 
 export default function SakilaPage(){
     
@@ -7,12 +7,12 @@ export default function SakilaPage(){
     const[loading, setloading] = useState(true);
     const[error, setError] = useState(null);
     const [input, setInput] = useState("");
+    const [image, setImage] = useState("");
+    const imageSet = useState("");
     var passingID;
     let ref;
 
     
-
-
     const handleSubmit = (evt) => {
         evt.preventDefault();
         postmethod(input);
@@ -37,7 +37,7 @@ export default function SakilaPage(){
         return(
             <div id="waila">
                 <p>
-                You're currently looking at "{input}"
+                You're currently looking at "{image}"
                 </p>
             </div>
         )
@@ -83,7 +83,6 @@ export default function SakilaPage(){
                     getImage(id);
                 }
             });
-
         }, 2500);
 
     }
@@ -97,21 +96,45 @@ export default function SakilaPage(){
                 if(ai.generations[0]){
                     setai(ai.generations[0].img);
                     console.log("im here at getImage now");
+                    setInput("");
                 }
         });
+    }
+
+
+    function LoadImage(){
+        if(image !== input){
+            return(
+            <div>
+                <img alt="loading..." src={'data:image/png;base64,' + ai}/>
+            </div>
+            );
+        }
+        else {
+            return(
+            <div>
+                <img alt="loading..." src={gif}/>
+            </div>
+            );    
+        }
+    }
+
+    function paramUpdate(){
+        //setImage(e.target.value)
+        this.imageSet = false;
     }
 
 
     return(
         <div id='main'>
             <FilmTitle/>
-            <img alt={gif} src={'data:image/png;base64,' + ai} />
+            <LoadImage/>
             <form onSubmit={handleSubmit}>
-            <label>
+            <label id='prompt'>
               Give a Prompt:
               <input
                 type="text"
-                onChange={e => setInput(e.target.value)}
+                onChange={e => {setImage(e.target.value); setInput(e.target.value)}}
               />
             </label>
             <input type="submit" value="Submit" />
@@ -119,4 +142,3 @@ export default function SakilaPage(){
         </div>
     );
 }
-
