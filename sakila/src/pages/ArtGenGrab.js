@@ -6,10 +6,11 @@ import gif from '../skate2.gif';
 export default function ArtGenGrab(){
 
         const [ai, setai] = useState(0);
-        const[loading, setloading] = useState(true);
         const[error, setError] = useState(null);
         const [input, setInput] = useState("");
         const [title, setTitle] = useState("");
+        const[loading, setloading] = useState(true);
+
         var passingID;
         let ref;
 
@@ -18,17 +19,17 @@ export default function ArtGenGrab(){
 
         const handleSubmit = (evt) => {
             evt.preventDefault();
-            postmethod(input);
+            setloading(true);
+            filmDescThenStart();
         }
 
 
         useEffect(() => {
-            filmDesc();
-            //filmTitle();
+            filmDescThenStart();
         },[])  
 
 
-    function filmDesc(){
+    function filmDescThenStart(){
         fetch("https://demo-1668596771555.azurewebsites.net/home/allFilms/random/0")
         .then(res => res.json())
         .then(desc => {
@@ -41,25 +42,33 @@ export default function ArtGenGrab(){
         })
     }
 
-    function filmId(){
-        fetch(ref)
-        .then(res => res.json())
-        .then(id =>
-            id.filmId)
-    }
 
 
     function FilmTitle(){
-        return(
-            <div id="waila">
-                <p>
-                You're currently looking at "{title.filmTitle}"
-                </p>
-                <p>
-                "{title.filmDesc}"
-                </p>
-            </div>
-        )
+        if(loading == true){
+            return(
+                <div id="waila">
+                    <p>
+                    You'll soon be looking at "{title.filmTitle}"
+                    </p>
+                    <p>
+                    "{title.filmDesc}"
+                    </p>
+                </div>
+            )
+        } else {
+            return(
+                <div id="waila">
+                    <p>
+                    You're currently looking at "{title.filmTitle}"
+                    </p>
+                    <p>
+                    "{title.filmDesc}"
+                    </p>
+                </div>
+            )
+        }
+        
     }
 
 
@@ -67,7 +76,7 @@ export default function ArtGenGrab(){
         fetch("https://stablehorde.net/api/v2/generate/async", {
             method: 'POST',
             headers: {
-                "apikey": "tfgQCv8pHWSRiv8PRP94VA",
+                "apikey": "iDrJk9XiVBvZBVeuZPZWwg",
                 "accept": "application/json",
                 "Content-Type": "application/json"
             }, 
@@ -80,7 +89,6 @@ export default function ArtGenGrab(){
             if(ai.message){
                 setai("");
                 console.log("test");
-                alert("No Text!");
                 return;
             } else {
                 console.log(ai.id);
@@ -117,6 +125,7 @@ export default function ArtGenGrab(){
                 if(ai.generations[0]){
                     setai(ai.generations[0].img);
                     console.log("image got!");
+                    setloading(false);
                 }
         });
     }
@@ -126,12 +135,12 @@ export default function ArtGenGrab(){
             <div id='main'>
                 <FilmTitle/>
                 <div>
-                {input !== "" ? <img alt="loading..." src={'data:image/png;base64,' + ai}/> : <img alt="loading..." src={gif}/>}
+                {loading !== true ? <img alt="loading..." src={'data:image/png;base64,' + ai}/> : <img alt="loading..." src={gif}/>}
                 </div>
-                <br></br>
-                <button id='navbtn'onSubmit={handleSubmit}>
+                {/* <br></br> */}
+                <button id='navbtn'onClick={handleSubmit}>
                 New Image!
-              </button>
+                </button>
             </div>
         )
     }

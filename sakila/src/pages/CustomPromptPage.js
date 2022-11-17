@@ -1,20 +1,23 @@
 import React, {useEffect, useState} from 'react'
 import gif from "../skate2.gif"
+import gif2 from "../giphy.gif"
 
 export default function SakilaPage(){
     
     const [ai, setai] = useState(0);
-    const[loading, setloading] = useState(true);
     const[error, setError] = useState(null);
     const [input, setInput] = useState("");
     const [image, setImage] = useState("");
-    const imageSet = useState("");
-    var passingID;
-    let ref;
+    const [loaded, setLoaded] = useState("");
+    const[loading, setLoading] = useState("");
+
 
     
     const handleSubmit = (evt) => {
         evt.preventDefault();
+        setInput(image);
+        setLoading(true);
+        setLoaded(false);
         postmethod(input);
     }
 
@@ -25,22 +28,42 @@ export default function SakilaPage(){
     },[])  
 
 
-    function filmId(){
-        fetch(ref)
-        .then(res => res.json())
-        .then(id =>
-            id.filmId)
-    }
-
-
     function FilmTitle(){
-        return(
-            <div id="waila">
-                <p>
-                You're currently looking at "{image}"
-                </p>
-            </div>
-        )
+        if(loaded == false && loading == false){
+            return(
+                <div id="waila">
+                    <p>
+                        You're currently looking at a bird
+                    </p>
+                    <p>
+                        Nothing is loading right now :)
+                    </p>
+                    <p>
+                        You can give a little prompt in the box if you'd like and I'll try generate it!
+                    </p>
+                    <div>
+                    <img alt="loading..." src={gif2}/>
+                    </div>
+                </div>
+            )
+        } else if(loaded == true && loading == false){
+            return(
+                <div id="waila">
+                    <p>
+                    You're currently looking at "{input}"
+                    </p>
+                </div>
+            )
+        } else if(loaded == false && loading == true){
+            return(
+                <div>
+                    <p id='waila'>
+                        Getting your image, hold on tight!
+                    </p>
+                </div>
+            )
+        }
+        
     }
 
 
@@ -79,7 +102,7 @@ export default function SakilaPage(){
                     console.log("trying");
                     checkImage(id);
                 } else {
-                    console.log("im calling getImage for " + passingID)
+                    console.log("im calling getImage for ")
                     getImage(id);
                 }
             });
@@ -96,32 +119,28 @@ export default function SakilaPage(){
                 if(ai.generations[0]){
                     setai(ai.generations[0].img);
                     console.log("image got!");
-                    setInput("");
+                    setLoaded(true);
+                    setLoading(false);
                 }
         });
     }
 
 
     function LoadImage(){
-        if(image !== input){
+        if(loaded == true && loading == false){
             return(
             <div>
                 <img alt="loading..." src={'data:image/png;base64,' + ai}/>
             </div>
             );
         }
-        else if(image == input){
+        else if(loaded == false && loading == true){
             return(
             <div>
                 <img alt="loading..." src={gif}/>
             </div>
-            );    
-        }
-    }
-
-    function paramUpdate(){
-        //setImage(e.target.value)
-        this.imageSet = false;
+            );
+        }  
     }
 
 
@@ -134,7 +153,7 @@ export default function SakilaPage(){
               Give a Prompt:
               <input
                 type="text"
-                onChange={e => {setImage(e.target.value)}} //; setInput(e.target.value)
+                onChange={e => setImage(e.target.value)} //; setInput(e.target.value)
               />
             </label>
             <input type="submit" value="Submit" />
