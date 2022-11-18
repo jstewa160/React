@@ -137,7 +137,6 @@ export default function ArtGenGrab(){
                 <div>
                 {loading !== true ? <img alt="loading..." src={'data:image/png;base64,' + ai}/> : <img alt="loading..." src={gif}/>}
                 </div>
-                {/* <br></br> */}
                 <button id='navbtn'onClick={handleSubmit}>
                 New Image!
                 </button>

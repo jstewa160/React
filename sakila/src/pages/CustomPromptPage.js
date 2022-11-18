@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import gif from "../skate2.gif"
 import gif2 from "../giphy.gif"
+import bam from "../bam.jpg"
+import wow from "../wow.jpg"
 
 export default function SakilaPage(){
     
@@ -33,10 +35,10 @@ export default function SakilaPage(){
             return(
                 <div id="waila">
                     <p>
-                        You're currently looking at a bird
+                        You're currently looking at a bird :)
                     </p>
                     <p>
-                        Nothing is loading right now :)
+                        Nothing is loading right now but...
                     </p>
                     <p>
                         You can give a little prompt in the box if you'd like and I'll try generate it!
@@ -132,6 +134,7 @@ export default function SakilaPage(){
             <div>
                 <img alt="loading..." src={'data:image/png;base64,' + ai}/>
             </div>
+
             );
         }
         else if(loaded == false && loading == true){
