@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import gif from "../skate2.gif"
 import gif2 from "../giphy.gif"
-import bam from "../bam.jpg"
-import wow from "../wow.jpg"
 
 export default function SakilaPage(){
     
